@@ -1,13 +1,14 @@
 chrome.browserAction.onClicked.addListener(function(tab) {
-  let toFind = prompt('Search for HTML element (jQuery notation): ', 'a');    
-  Promise.all([
-    onloadPromise("jquery-3.2.1.min.js"),
-    ]).then( () => {
-      chrome.tabs.insertCSS(null, {file: "styles.css" });
-      chrome.tabs.executeScript(null, {file:"app.js" }, function(url){
-          chrome.tabs.executeScript(null, {code:`extIncapsulator("${toFind}")`} ); // !! unsafe quotes
-        })
-    });
+  const init = () => {
+    chrome.tabs.insertCSS(null, { file: "styles.css" });
+    chrome.tabs.executeScript(null, { file: "app.js" }, function (url) {
+      chrome.tabs.executeScript(null, { code: `extIncapsulator()` }); // !! unsafe quotes
+    })
+  }
+  init();
+  // Promise.all([
+  //   onloadPromise("jquery-3.2.1.min.js"),
+  //   ]).then( init );
 });
 
 onloadPromise = function(src){
