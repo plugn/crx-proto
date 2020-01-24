@@ -36,18 +36,19 @@ var confDefault = [
 ]
 
 function extIncapsulator () {
-	var sConf = prompt('Search for HTML element (jQuery notation): ', 'a');
+	var input = prompt('Search for HTML element (jQuery notation): ', 'a')
 	var conf
 
 	try {
-		conf = JSON.parse(String(sConf))
+		conf = JSON.parse(String(input).replace(/^"|"$/g, ''))
 	} catch (e) {
-		console.log('(!) sConf: ', sConf)
-		console.log('(!) conf: ', conf)
+		console.log('(!) input: ', input, ' -> conf: ', conf)
 		console.warn(e)
 	}
 
-	conf = conf || confDefault
+	if (!conf) { return }
+	// conf = conf || confDefault
+
 	if (!Array.isArray(conf) || !(conf && conf.length)) {
 		console.log('conf must look like: ', confDefault)
 		return
